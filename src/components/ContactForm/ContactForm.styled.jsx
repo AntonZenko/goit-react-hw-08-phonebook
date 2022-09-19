@@ -32,18 +32,27 @@ export const Label = styled.label`
 `;
 
 export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 30px;
-  margin: 0 auto;
   border: none;
   color: #fff;
   background-color: #085380;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 4px 10px;
   :hover {
     background-color: #4cbafc;
     color: #292929;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   }
+`;
+
+export const BtnWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 `;

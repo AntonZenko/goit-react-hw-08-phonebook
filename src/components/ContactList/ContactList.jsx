@@ -1,43 +1,34 @@
 import ContactListItem from 'components/ContactListItem';
 import { List, Message } from './ContactList.styled';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact, getContacts, getFilter } from '../redux/contactSlice';
+import { useSelector } from 'react-redux';
+import { useGetContactsQuery } from '../redux/contactApi';
+import { getFilter } from '../redux/filterSlice';
 
 function ContactList() {
-  const contactsInState = useSelector(getContacts);
+  const { data: contactList, isLoading } = useGetContactsQuery();
   const filter = useSelector(getFilter);
-  const dispatch = useDispatch();
 
   function visibleContacts() {
     const normalizedFilter = filter.toLowerCase();
     return filter
-      ? contactsInState.filter(contact =>
+      ? contactList.filter(contact =>
           contact.name.toLowerCase().includes(normalizedFilter)
         )
-      : contactsInState;
+      : contactList;
   }
   const contacts = visibleContacts();
 
   return (
     <List>
-      {contacts.length ? (
-        contacts.map(({ name, number, id }) => (
-          <ContactListItem
-            name={name}
-            number={number}
-            key={id}
-            handleClick={() => {
-              dispatch(deleteContact(id, name));
-              Notify.success(`${name} deleted from your phonebook`, {
-                timeout: 2000,
-              });
-            }}
-          />
-        ))
+      {isLoading ? (
+        <Message>LOADING...</Message>
+      ) : contacts.length === 0 ? (
+        <Message>Contact not found&#129335;</Message>
       ) : (
-        <Message>You have no contacts yet&#129335;</Message>
+        contacts.map(({ name, phone, id }) => (
+          <ContactListItem name={name} number={phone} key={id} id={id} />
+        ))
       )}
     </List>
   );

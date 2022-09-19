@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addContact } from '../redux/contactSlice';
+import { useAddContactMutation } from '../redux/contactApi';
+import Loader from 'components/Loader/Loader';
 
 import { nanoid } from 'nanoid';
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-import { Form, Input, Button, Label } from './ContactForm.styled';
+import { Form, Input, Button, Label, BtnWrapper } from './ContactForm.styled';
 
 export default function ContactForm() {
-  const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [addContact, { isLoading }] = useAddContactMutation();
 
-  const numberInputId = nanoid();
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
   const nameInputId = nanoid();
+  const numberInputId = nanoid();
 
   const handleChange = event => {
     const { name } = event.currentTarget;
@@ -22,8 +22,8 @@ export default function ContactForm() {
         setName(event.currentTarget.value);
         break;
 
-      case 'number':
-        setNumber(event.currentTarget.value);
+      case 'phone':
+        setPhone(event.currentTarget.value);
         break;
 
       default:
@@ -31,25 +31,23 @@ export default function ContactForm() {
     }
   };
 
+  const handleAddContact = async newContact => {
+    try {
+      await addContact(newContact);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
-
-    dispatch(
-      addContact({
-        id: nanoid(),
-        name,
-        number,
-      })
-    );
-
-    // Notify.warning(`${name} is already in contacts`, { timeout: 2000 });
-
+    handleAddContact({ name, phone });
     reset();
   };
 
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -68,15 +66,23 @@ export default function ContactForm() {
       <Label htmlFor={numberInputId}>Number</Label>
       <Input
         type="tel"
-        name="number"
+        name="phone"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
         id={numberInputId}
-        value={number}
+        value={phone}
         onChange={handleChange}
       />
-      <Button type="submit">Add contact</Button>
+      {isLoading ? (
+        <BtnWrapper>
+          <Loader />
+        </BtnWrapper>
+      ) : (
+        <Button type="submit" isDisabled={isLoading}>
+          Add new Contact
+        </Button>
+      )}
     </Form>
   );
 }
