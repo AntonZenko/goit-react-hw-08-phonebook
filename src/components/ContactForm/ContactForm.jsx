@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 import { useGetContactsQuery } from '../redux/contactApi';
 
 export default function ContactForm() {
-  const { data } = useGetContactsQuery();
+  const { data: contactList } = useGetContactsQuery();
   const [addContact, { isLoading }] = useAddContactMutation();
 
   const [name, setName] = useState('');
@@ -34,7 +34,7 @@ export default function ContactForm() {
   };
 
   const handleAddContact = async newContact => {
-    const existseContact = data.find(
+    const existseContact = contactList.find(
       contact => contact.name === name || contact.phone === phone
     );
     if (existseContact) {
