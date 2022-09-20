@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { Form, Input, Button, Label, BtnWrapper } from './ContactForm.styled';
 import { useAddContactMutation } from '../redux/contactApi';
 import Loader from 'components/Loader/Loader';
-
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { nanoid } from 'nanoid';
 
-import { Form, Input, Button, Label, BtnWrapper } from './ContactForm.styled';
+import { useGetContactsQuery } from '../redux/contactApi';
 
 export default function ContactForm() {
+  const { data } = useGetContactsQuery();
   const [addContact, { isLoading }] = useAddContactMutation();
 
   const [name, setName] = useState('');
@@ -32,17 +34,27 @@ export default function ContactForm() {
   };
 
   const handleAddContact = async newContact => {
+    const existseContact = data.find(
+      contact => contact.name === name || contact.phone === phone
+    );
+    if (existseContact) {
+      existseContact.name === name
+        ? Notify.failure('Name is already exist')
+        : Notify.failure('Phone number is already exist');
+      return;
+    }
+
     try {
       await addContact(newContact);
     } catch (error) {
       console.log(error);
     }
+    reset();
   };
 
   const handleSubmit = event => {
     event.preventDefault();
     handleAddContact({ name, phone });
-    reset();
   };
 
   const reset = () => {
