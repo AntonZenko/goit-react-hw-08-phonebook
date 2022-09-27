@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const getUserContacts = createAsyncThunk(
   'contacts/getContacts',
   async credentials => {
     try {
       const { data } = await axios.get('/contacts');
-      // console.log('operations', data);
       return data;
     } catch (error) {}
   }
@@ -17,7 +16,6 @@ const createNewContact = createAsyncThunk(
   async credentials => {
     try {
       const { data } = await axios.post('/contacts', credentials);
-      // console.log(data);
       return data;
     } catch (error) {}
   }
@@ -28,7 +26,6 @@ const deleteContact = createAsyncThunk(
   async credentials => {
     try {
       const { data } = await axios.delete(`/contacts/${credentials}`);
-      // console.log('delete', data);
       return data;
     } catch (error) {}
   }
