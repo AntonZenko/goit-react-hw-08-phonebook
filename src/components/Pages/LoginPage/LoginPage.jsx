@@ -1,5 +1,4 @@
 import { Container } from '../../Container/Container';
-import { nanoid } from 'nanoid';
 import PageTitle from 'components/PageTitle/PageTitle';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
