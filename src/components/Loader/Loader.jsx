@@ -4,10 +4,10 @@ export default function Loader() {
   return (
     <LoaderContainer>
       <Spinner
-        strokeColor="red"
+        strokeColor="grey"
         strokeWidth="4"
         animationDuration="0.75"
-        width="50"
+        width="26"
         visible={true}
       />
     </LoaderContainer>

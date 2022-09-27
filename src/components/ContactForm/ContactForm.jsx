@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import { Form, Input, Button, Label, BtnWrapper } from './ContactForm.styled';
-import { useAddContactMutation } from '../redux/contactApi';
-import Loader from 'components/Loader/Loader';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
-
-import { useGetContactsQuery } from '../redux/contactApi';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { contactsSelectors, contactsOperations } from '../redux/contact';
+import { Form, Input, Button, Label, BtnWrapper } from './ContactForm.styled';
+import Loader from 'components/Loader/Loader';
 
 export default function ContactForm() {
-  const { data: contactList } = useGetContactsQuery();
-  const [addContact, { isLoading }] = useAddContactMutation();
-
+  const dispatch = useDispatch();
+  const contacts = useSelector(contactsSelectors);
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
+
+  const isLoading = false;
 
   const nameInputId = nanoid();
   const numberInputId = nanoid();
@@ -24,8 +24,8 @@ export default function ContactForm() {
         setName(event.currentTarget.value);
         break;
 
-      case 'phone':
-        setPhone(event.currentTarget.value);
+      case 'number':
+        setNumber(event.currentTarget.value);
         break;
 
       default:
@@ -33,33 +33,24 @@ export default function ContactForm() {
     }
   };
 
-  const handleAddContact = async newContact => {
-    const existseContact = contactList.find(
-      contact => contact.name === name || contact.phone === phone
-    );
-    if (existseContact) {
-      existseContact.name === name
-        ? Notify.failure('Name is already exist')
-        : Notify.failure('Phone number is already exist');
-      return;
-    }
-
-    try {
-      await addContact(newContact);
-    } catch (error) {
-      console.log(error);
-    }
-    reset();
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
-    handleAddContact({ name, phone });
-  };
 
+    if (contacts?.length > 0) {
+      if (contacts.some(item => item.name === name)) {
+        return Notify.warning(`${name} is already in contacts`);
+      }
+      if (contacts.some(item => item.number === number)) {
+        return Notify.warning(`${number} is already in contacts`);
+      }
+    }
+
+    dispatch(contactsOperations.createNewContact({ name, number }));
+    reset();
+  };
   const reset = () => {
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -69,7 +60,7 @@ export default function ContactForm() {
         type="text"
         name="name"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer."
         required
         id={nameInputId}
         value={name}
@@ -78,12 +69,12 @@ export default function ContactForm() {
       <Label htmlFor={numberInputId}>Number</Label>
       <Input
         type="tel"
-        name="phone"
+        name="number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
         id={numberInputId}
-        value={phone}
+        value={number}
         onChange={handleChange}
       />
       {isLoading ? (
@@ -91,9 +82,7 @@ export default function ContactForm() {
           <Loader />
         </BtnWrapper>
       ) : (
-        <Button type="submit" isDisabled={isLoading}>
-          Add new Contact
-        </Button>
+        <Button type="submit">Add new Contact</Button>
       )}
     </Form>
   );

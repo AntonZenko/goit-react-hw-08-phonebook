@@ -1,15 +1,20 @@
-// import { useEffect, useState } from 'react';
-
-// import { searchMovie } from '../../services/fetchService';
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import { Form, Input, Button } from './Contacts.styled';
-
-import PageTitle from 'components/PageTitle/PageTitle';
+import Section from '../../Section/Section';
+import ContactForm from '../../ContactForm/ContactForm';
+import Filter from '../../Filter/Filter';
+import ContactList from '../../ContactList/ContactList';
 
 export default function Contacts() {
   return (
     <>
-      <PageTitle>Contacts</PageTitle>
+      <Section title="Phonebook">
+        <ContactForm />
+      </Section>
+      <Section title="Contacts">
+        <Filter />
+      </Section>
+      <Section title="Contact List">
+        <ContactList />
+      </Section>
     </>
   );
 }

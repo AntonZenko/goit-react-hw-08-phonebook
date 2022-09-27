@@ -1,7 +1,7 @@
 import { Title } from './PageTitle.styled';
 
-const PageTitle = ({ children }) => {
-  return <Title>{children}</Title>;
+const PageTitle = ({ title }) => {
+  return <Title>{title}</Title>;
 };
 
 export default PageTitle;
