@@ -29,7 +29,7 @@ export function App() {
       {isFetchingCurrentUser ? (
         <h1>show React Skeleton</h1>
       ) : (
-        <BrowserRouter basename="/">
+        <BrowserRouter basename="/goit-react-hw-08-phonebook">
           <Suspense fallback={<p>Loading...</p>}>
             <Routes>
               <Route path="/" element={<AppBar />}>
