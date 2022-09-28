@@ -4,16 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from '../../redux/auth';
 
-const styles = {
-  form: {
-    width: 320,
-  },
-  label: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-};
+import { Form, Field, Btn } from './LoginPage.styled';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -39,34 +30,36 @@ const LoginPage = () => {
   };
   return (
     <Container>
-      <PageTitle>Login</PageTitle>
-      <div>
-        <h1>Страница логина</h1>
+      <PageTitle title={'Login'}></PageTitle>
+      <Form onSubmit={handleSubmit} autoComplete="on">
+        <Field
+          label="E-mail"
+          placeholder="ironMan3000@gmail.com"
+          multiline
+          variant="standard"
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+          required
+        />
+        <Field
+          label="Password"
+          placeholder="qwerty123"
+          multiline
+          variant="standard"
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          required
+          autoComplete="on"
+        />
 
-        <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
-          <label style={styles.label}>
-            Почта
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label style={styles.label}>
-            Пароль
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-            />
-          </label>
-
-          <button type="submit">Войти</button>
-        </form>
-      </div>
+        <Btn variant="contained" size="small" color="secondary" type="submit">
+          Login
+        </Btn>
+      </Form>
     </Container>
   );
 };

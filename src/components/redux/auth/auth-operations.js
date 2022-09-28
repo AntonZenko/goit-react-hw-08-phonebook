@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -12,27 +13,46 @@ const token = {
   },
 };
 
-const register = createAsyncThunk('auth/register', async credentials => {
-  try {
-    const { data } = await axios.post('/users/signup', credentials);
-    token.set(data.token);
-    return data;
-  } catch (error) {}
-});
+const register = createAsyncThunk(
+  'auth/register',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await axios.post('/users/signup', credentials);
+      token.set(data.token);
+      console.log(thunkAPI);
+      return data;
+    } catch (error) {
+      Notify.failure(`${error.message}, please try again`, {
+        timeout: 1500,
+      });
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
 
-const logIn = createAsyncThunk('auth/login', async credentials => {
+const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
   try {
     const { data } = await axios.post('/users/login', credentials);
     token.set(data.token);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Notify.failure(`${error.message}, please try again`, {
+      timeout: 1500,
+    });
+    return thunkAPI.rejectWithValue();
+  }
 });
 
-const logOut = createAsyncThunk('auth/logout', async () => {
+const logOut = createAsyncThunk('auth/logout', async thunkAPI => {
   try {
     await axios.post('/users/logout');
     token.unset();
-  } catch (error) {}
+  } catch (error) {
+    Notify.failure(`${error.message}, please try again`, {
+      timeout: 1500,
+    });
+    return thunkAPI.rejectWithValue();
+  }
 });
 
 const fetchCurrentUser = createAsyncThunk(
@@ -43,7 +63,7 @@ const fetchCurrentUser = createAsyncThunk(
     const persistedToken = state.auth.token;
 
     if (persistedToken === null) {
-      console.log('no token, fetchCurrentUser');
+      // console.log('no token, fetchCurrentUser');
       return thunkAPI.rejectWithValue();
     }
 
@@ -52,7 +72,9 @@ const fetchCurrentUser = createAsyncThunk(
       const { data } = await axios.get('/users/current');
       return data;
     } catch (error) {
-      console.log('WTF', error);
+      Notify.failure(`${error.message}, please try again`, {
+        timeout: 1500,
+      });
     }
   }
 );

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import TextField from '@mui/material/TextField';
 
 export const Input = styled.input`
   padding: 8px;
@@ -19,4 +20,12 @@ export const Label = styled.label`
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
+`;
+
+export const Field = styled(TextField)`
+  font-size: 16px;
+  width: 30%;
+  :not(:last-child) {
+    margin-bottom: 10px;
+  }
 `;

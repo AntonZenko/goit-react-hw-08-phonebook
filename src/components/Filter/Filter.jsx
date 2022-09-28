@@ -1,11 +1,9 @@
-import { nanoid } from 'nanoid';
-import { Label, Input } from './Filter.styled';
+import { Field } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { filterSelector } from '../redux/filter';
 import { changeFilter } from '../redux/filter/filter-slice';
 
 function Filter() {
-  const inputId = nanoid();
   const dispatch = useDispatch();
   const filter = useSelector(filterSelector);
 
@@ -15,8 +13,11 @@ function Filter() {
 
   return (
     <>
-      <Label htmlFor={inputId}>Find contacts by name</Label>
-      <Input
+      <Field
+        label="Find contacts by name"
+        placeholder="Steve Rogers"
+        multiline
+        variant="standard"
         type="text"
         name="filter"
         value={filter}

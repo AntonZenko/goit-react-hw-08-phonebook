@@ -6,7 +6,7 @@ import ContactList from '../../ContactList/ContactList';
 export default function Contacts() {
   return (
     <>
-      <Section title="Phonebook">
+      <Section title="Create new contact">
         <ContactForm />
       </Section>
       <Section title="Contacts">

@@ -4,7 +4,7 @@ import PageTitle from '../../PageTitle/PageTitle';
 const HomePage = () => {
   return (
     <Container>
-      <PageTitle title="Home page"></PageTitle>
+      <PageTitle title="Welcome to contacts storage app"></PageTitle>
     </Container>
   );
 };

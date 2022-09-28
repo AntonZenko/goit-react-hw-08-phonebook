@@ -4,8 +4,10 @@ import { contactsOperations } from '../redux/contact';
 import PropTypes from 'prop-types';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import Loader from '../Loader/Loader';
+// import Skeleton from '@mui/material/Skeleton';
+// import Box from '@mui/material/Box';
 
-import { Item, Name, Number, Button } from './ContactListItem.styled';
+import { Item, Name, Number, Btn } from './ContactListItem.styled';
 
 function ContactListItem({ name, number, id }) {
   const dispatch = useDispatch();
@@ -24,19 +26,28 @@ function ContactListItem({ name, number, id }) {
     <Item>
       <Name>{name}:</Name>
       <Number>{number}</Number>
-      {isDeleting ? (
-        <Loader />
-      ) : (
-        <Button
+
+      {!isDeleting ? (
+        <Btn
           type="button"
+          variant="contained"
+          size="medium"
+          color="secondary"
           disabled={isLoading}
           onClick={() => {
             handelDeleteContact(id);
-            Notify.success(`Contact ${name} deleted!`);
+            Notify.success(`Contact ${name} deleted!`, {
+              timeout: 1500,
+            });
           }}
         >
           Delete
-        </Button>
+        </Btn>
+      ) : (
+        // <Box sx={{ width: '100%' }}>
+        //   <Skeleton animation="wave" />
+        // </Box>
+        <Loader isLoading={isDeleting} spinner={true} />
       )}
     </Item>
   );

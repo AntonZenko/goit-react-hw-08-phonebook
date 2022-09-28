@@ -5,17 +5,7 @@ import { authOperations } from '../../redux/auth';
 
 import { Container } from '../../Container/Container';
 import PageTitle from 'components/PageTitle/PageTitle';
-
-const styles = {
-  form: {
-    width: 320,
-  },
-  label: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-};
+import { Form, Field, Btn } from './RegisterPage.styled';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -46,44 +36,48 @@ const Register = () => {
 
   return (
     <Container>
-      <PageTitle>Register</PageTitle>
-      <div>
-        <h1>Страница регистрации</h1>
+      <PageTitle title={'Sign Up'}></PageTitle>
+      <Form onSubmit={handleSubmit} autoComplete="on">
+        <Field
+          label="Name"
+          placeholder="Fury"
+          multiline
+          variant="standard"
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          required
+        />
+        <Field
+          label="E-mail"
+          placeholder="ironMan3000@gmail.com"
+          multiline
+          variant="standard"
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+          required
+        />
 
-        <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
-          <label style={styles.label}>
-            Имя
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={handleChange}
-            />
-          </label>
+        <Field
+          label="Password"
+          placeholder="qwerty123"
+          multiline
+          variant="standard"
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          required
+          autoComplete="on"
+        />
 
-          <label style={styles.label}>
-            Почта
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label style={styles.label}>
-            Пароль
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-            />
-          </label>
-
-          <button type="submit">Зарегистрироваться</button>
-        </form>
-      </div>
+        <Btn variant="contained" size="small" color="secondary" type="submit">
+          Sign up
+        </Btn>
+      </Form>
     </Container>
   );
 };

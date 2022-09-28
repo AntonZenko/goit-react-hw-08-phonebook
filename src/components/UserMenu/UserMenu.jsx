@@ -1,7 +1,6 @@
-import { Wrapper, Name, Text, NavLinkStyled } from './UserMenu.styled';
+import { Wrapper, Name, Text, NavLinkStyled, Btn } from './UserMenu.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { authSelectors, authOperations } from '../redux/auth';
-import Button from '@mui/material/Button';
 
 export const UserMenu = () => {
   const dispatch = useDispatch();
@@ -10,21 +9,17 @@ export const UserMenu = () => {
     <Wrapper>
       <NavLinkStyled to="/contacts">Contacts</NavLinkStyled>
       <div>
-        <Text>Hello, </Text>
+        <Text>Hello,</Text>
         <Name>{userName}</Name>
-        <Button
+        <Btn
           type="button"
           variant="contained"
-          size="small"
-          color="primary"
+          size="medium"
+          color="secondary"
           onClick={() => dispatch(authOperations.logOut())}
         >
           Log out
-        </Button>
-        {/* <Button
-          type="button"
-          onClick={() => dispatch(authOperations.logOut())}
-        ></Button> */}
+        </Btn>
       </div>
     </Wrapper>
   );

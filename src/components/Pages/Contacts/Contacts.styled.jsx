@@ -12,11 +12,9 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  // width: 100px;
   padding: 2px 20px;
   height: 30px;
   margin-left: 10px;
-  // border: 1px solid #303030;
   border-radius: 5px;
   background-color: #fff;
   cursor: pointer;
