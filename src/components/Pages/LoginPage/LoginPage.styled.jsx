@@ -5,8 +5,14 @@ import Button from '@mui/material/Button';
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 100%;
   margin: 0 auto;
+  @media screen and (min-width: 480px) {
+    width: 70%;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 30%;
+  }
 `;
 
 export const Field = styled(TextField)`

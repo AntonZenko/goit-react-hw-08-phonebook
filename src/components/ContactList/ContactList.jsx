@@ -14,9 +14,11 @@ function ContactList() {
     dispatch(contactsOperations.getUserContacts());
   }, [dispatch]);
 
+  console.log(contacts);
+
   return (
     <List>
-      {contacts ? (
+      {contacts && contacts.length > 0 ? (
         (filter
           ? contacts.filter(contact =>
               contact.name.toLowerCase().includes(filter.toLowerCase())

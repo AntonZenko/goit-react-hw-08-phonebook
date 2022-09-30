@@ -16,7 +16,6 @@ function Filter() {
       <Field
         label="Find contacts by name"
         placeholder="Steve Rogers"
-        multiline
         variant="standard"
         type="text"
         name="filter"

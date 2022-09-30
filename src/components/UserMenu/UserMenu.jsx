@@ -1,6 +1,6 @@
-import { Wrapper, Name, Text, NavLinkStyled, Btn } from './UserMenu.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { authSelectors, authOperations } from '../redux/auth';
+import { Wrapper, Text, NavLinkStyled, Btn, Box } from './UserMenu.styled';
 
 export const UserMenu = () => {
   const dispatch = useDispatch();
@@ -8,9 +8,9 @@ export const UserMenu = () => {
   return (
     <Wrapper>
       <NavLinkStyled to="/contacts">Contacts</NavLinkStyled>
-      <div>
+      <Box>
         <Text>Hello,</Text>
-        <Name>{userName}</Name>
+        <Text>{userName}</Text>
         <Btn
           type="button"
           variant="contained"
@@ -20,7 +20,7 @@ export const UserMenu = () => {
         >
           Log out
         </Btn>
-      </div>
+      </Box>
     </Wrapper>
   );
 };

@@ -9,37 +9,41 @@ export const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const Text = styled.span`
-  font-size: 16px;
-  color: #94d1c4;
-
-  font-weight: 500;
-  margin-right: 10px;
+export const Box = styled.div`
+  // display: flex;
 `;
 
-export const Name = styled.span`
+export const Text = styled.span`
+  font-size: 14px;
   color: #94d1c4;
-
-  margin-right: 10px;
-  font-size: 16px;
   font-weight: 500;
+  margin-right: 10px;
+  @media screen and (min-width: 480px) {
+    font-size: 16px;
+  }
 `;
 
 export const Btn = styled(Button)`
-  font-size: 14px;
-  padding: 5px 10px;
+  padding: 3px 8px;
+  font-size: 12px;
   color: #94d1c4;
   &:hover {
+  }
+  @media screen and (min-width: 480px) {
+    font-size: 14px;
+    padding: 5px 10px;
   }
 `;
 
 export const NavLinkStyled = styled(NavLink)`
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   color: #94d1c4;
-  margin-right: 20px;
   &:hover {
     color: #1d7874;
+  }
+  @media screen and (min-width: 480px) {
+    font-size: 16px;
   }
 `;

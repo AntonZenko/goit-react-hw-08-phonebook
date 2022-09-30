@@ -4,12 +4,11 @@ export const List = styled.ul`
   padding: 0;
   margin: 0 auto;
   list-style: none;
-  width: 60%;
 `;
 
-export const Message = styled.li`
+export const Message = styled.span`
+  display: block;
+  margin-top: 20px;
   text-align: center;
-  font-size: 24px;
-  margin: 20px auto;
-  width: 60%;
+  font-size: 18px;
 `;

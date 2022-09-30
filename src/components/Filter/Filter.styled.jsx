@@ -24,7 +24,6 @@ export const Label = styled.label`
 
 export const Field = styled(TextField)`
   font-size: 16px;
-  width: 30%;
   :not(:last-child) {
     margin-bottom: 10px;
   }

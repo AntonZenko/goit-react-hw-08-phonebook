@@ -8,11 +8,15 @@ export const Wrapper = styled.div`
 
 export const NavLinkStyled = styled(NavLink)`
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
+  margin-right: 10px;
   color: #94d1c4;
-  margin-right: 20px;
   &:hover {
     color: #1d7874;
+  }
+  @media screen and (min-width: 480px) {
+    font-size: 16px;
+    margin-right: 20px;
   }
 `;

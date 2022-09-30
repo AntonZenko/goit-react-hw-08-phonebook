@@ -1,4 +1,3 @@
-// import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from '../../redux/auth';
@@ -37,11 +36,10 @@ const Register = () => {
   return (
     <Container>
       <PageTitle title={'Sign Up'}></PageTitle>
-      <Form onSubmit={handleSubmit} autoComplete="on">
+      <Form onSubmit={handleSubmit} autoComplete="off">
         <Field
           label="Name"
-          placeholder="Fury"
-          multiline
+          placeholder="Nick Fury"
           variant="standard"
           type="text"
           name="name"
@@ -52,7 +50,6 @@ const Register = () => {
         <Field
           label="E-mail"
           placeholder="ironMan3000@gmail.com"
-          multiline
           variant="standard"
           type="email"
           name="email"
@@ -64,16 +61,13 @@ const Register = () => {
         <Field
           label="Password"
           placeholder="qwerty123"
-          multiline
           variant="standard"
           type="password"
           name="password"
           value={password}
           onChange={handleChange}
           required
-          autoComplete="on"
         />
-
         <Btn variant="contained" size="small" color="secondary" type="submit">
           Sign up
         </Btn>

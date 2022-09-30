@@ -3,7 +3,6 @@ import PageTitle from 'components/PageTitle/PageTitle';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from '../../redux/auth';
-
 import { Form, Field, Btn } from './LoginPage.styled';
 
 const LoginPage = () => {
@@ -35,7 +34,6 @@ const LoginPage = () => {
         <Field
           label="E-mail"
           placeholder="ironMan3000@gmail.com"
-          multiline
           variant="standard"
           type="email"
           name="email"
@@ -46,14 +44,12 @@ const LoginPage = () => {
         <Field
           label="Password"
           placeholder="qwerty123"
-          multiline
           variant="standard"
           type="password"
           name="password"
           value={password}
           onChange={handleChange}
           required
-          autoComplete="on"
         />
 
         <Btn variant="contained" size="small" color="secondary" type="submit">
