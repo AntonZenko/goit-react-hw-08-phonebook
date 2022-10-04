@@ -81,10 +81,12 @@ export default function ContactForm() {
         value={number}
         id={numberInputId}
         format="+38 (###) ### ## ##"
-        customInput={TextField}
+        allowEmptyFormatting
+        mask="_"
+        // customInput={TextField}
         onChange={handleChange}
         required
-        {...materialUITextFieldProps}
+        // {...materialUITextFieldProps}
       />
 
       <Btn variant="contained" size="small" color="secondary" type="submit">
